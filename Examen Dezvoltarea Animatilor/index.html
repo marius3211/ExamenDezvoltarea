@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Imagini în div-uri și pe canvas</title>
+    <style>
+        
+        img {
+    opacity: 0;
+}
+
+        .image-container img {
+            margin: 10px;
+            border: 5px solid black;
+            width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-image-container" class="image-container">
+        <img src="image/desktop-wallpaper-nature-imagini.jpg" alt="Imagine 1">
+        <img src="image/292758.jpg" alt="Imagine 2">
+        <img src="image/crocus-2145539_1280.jpg" alt="Imagine 3">
+        <img src="image/primele-imagini-cu-noul-audi-rs5-fa92865f60a8187f6-0-0-0-0-0.jpg" alt="Imagine 4">
+        <img src="image/primele-imagini-cu-noul-audi-rs5-b3bc665f6090c3721-0-0-0-0-0.jpg" alt="Imagine 5">
+        <img src="image/la-gran-cascada-del-rio-plitvice.jpg" alt="Imagine 6">
+    </div>
+
+    <canvas id="myCanvas" width="660" height="510" style="border:1px solid #000000;"></canvas>
+    
+    <script>
+        function drawImagesOnCanvas() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+
+            var images = document.querySelectorAll('img ');
+            
+            var x = 10;
+            var y = 10;
+
+            var loadedImagesCount = 0;
+
+            for (var i = 0; i < images.length; i++) {
+                var img = new Image();
+                img.src = images[i].src;
+                img.onload = function() {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === images.length) {
+                        for (var j = 0; j < images.length; j++) {
+                            ctx.drawImage(images[j], x, y, 200, 150);
+                            ctx.strokeStyle = 'black';
+                            ctx.lineWidth = 5;
+                            ctx.strokeRect(x, y, 200, 150);
+                            x += 220;
+                            if (x >= c.width - 220) {
+                                x = 10;
+                                y += 170;
+                            }
+                        }
+                    }
+                };
+            }
+        }
+
+
+        window.onload = drawImagesOnCanvas;
+    </script>
+</body>
+</html>
